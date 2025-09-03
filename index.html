@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Language Recognition System</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">🤟 Sign Language Recognition</h1>
+            <p class="subtitle">Real-time ASL gesture detection using AI</p>
+        </header>
+
+        <div class="main-content">
+            <div class="camera-section">
+                <div class="camera-container">
+                    <video id="videoElement" autoplay muted playsinline></video>
+                    <canvas id="outputCanvas"></canvas>
+                    <div class="camera-overlay">
+                        <div class="recording-indicator" id="recordingIndicator">
+                            <div class="pulse"></div>
+                            <span>Recording</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="camera-controls">
+                    <button id="startCamera" class="btn btn-primary">Start Camera</button>
+                    <button id="stopCamera" class="btn btn-secondary" disabled>Stop Camera</button>
+                    <button id="captureGesture" class="btn btn-success" disabled>Capture Gesture</button>
+                </div>
+            </div>
+
+            <div class="prediction-section">
+                <div class="prediction-card">
+                    <h3>Current Prediction</h3>
+                    <div class="prediction-result">
+                        <div class="predicted-letter" id="predictedLetter">-</div>
+                        <div class="confidence-meter">
+                            <div class="confidence-label">Confidence</div>
+                            <div class="confidence-bar">
+                                <div class="confidence-fill" id="confidenceFill"></div>
+                            </div>
+                            <div class="confidence-percentage" id="confidencePercentage">0%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gesture-history">
+                    <h3>Recent Predictions</h3>
+                    <div class="history-list" id="historyList">
+                        <div class="history-item">Ready to detect gestures...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="training-section">
+            <h2>Training Mode</h2>
+            <div class="training-controls">
+                <div class="gesture-input">
+                    <label for="gestureLabel">Gesture Label:</label>
+                    <input type="text" id="gestureLabel" placeholder="Enter letter (A-Z)" maxlength="1">
+                </div>
+                <button id="startTraining" class="btn btn-primary">Start Training</button>
+                <button id="saveModel" class="btn btn-success">Save Model</button>
+                <button id="loadModel" class="btn btn-secondary">Load Model</button>
+            </div>
+            <div class="training-data">
+                <div class="data-counter">
+                    <span>Training Samples: <strong id="sampleCount">0</strong></span>
+                </div>
+                <div class="gesture-samples" id="gestureSamples"></div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>How to Use</h2>
+            <div class="instructions">
+                <div class="instruction-card">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Start Camera</h4>
+                        <p>Click "Start Camera" to begin hand detection</p>
+                    </div>
+                </div>
+                <div class="instruction-card">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Show Sign</h4>
+                        <p>Hold your hand in front of the camera to make ASL gestures</p>
+                    </div>
+                </div>
+                <div class="instruction-card">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>View Predictions</h4>
+                        <p>See real-time predictions with confidence scores</p>
+                    </div>
+                </div>
+                <div class="instruction-card">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>Train Custom</h4>
+                        <p>Use training mode to add your own gestures</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="handDetection.js"></script>
+    <script src="gestureRecognition.js"></script>
+    <script src="training.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
